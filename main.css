@@ -1,0 +1,99 @@
+*
+{
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+}
+body
+{
+	background-image: url("bg.jpg");
+	margin: 10px auto;
+	width: 1200px;
+	height: 100%
+}
+#logo
+{
+	position: relative;
+	left: 450px;
+	width: 300px;
+	margin-bottom: 20px;
+}
+nav ul
+{
+	list-style-type: none;
+	width: 750px;
+	position: relative;
+	left: 241px;
+	margin-bottom: 20px;
+}
+nav li
+{
+	display: inline-block;
+	margin-left: 12px;
+}
+nav a
+{
+	text-align: center;
+	display: block;
+	font-size: 1.125em;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-weight: bold;
+	color: white;
+	text-decoration: none;
+	padding: 3px;
+	width: 120px;
+}
+nav a:link,a:visited
+{
+	background-color: black;
+}
+nav a:hover,a:active
+{
+	background-color: #996666;
+}
+article
+{
+	line-height:180%;
+	font-size: 1em;
+	font-family: Arial, sans-serif;
+}
+article h1
+{
+	font-size: 2em;
+	margin: 0.67em 0;
+	font-weight: bold;
+}
+article h2
+{
+	font-size: 1.5em;
+	margin: 0.83em 0;
+	font-weight: bold;
+}
+article h3
+{
+	font-size: 1.17em;
+	margin: 1em 0;
+	font-weight: bold;
+}
+article h4
+{
+	margin: 1.33em 0;
+	font-weight: bold;
+}
+article p
+{
+	margin: 1em 0;
+}
+article hr
+{
+	margin: 0.5em 0;
+}
+#imp
+{
+	color: black;
+	margin-left: 1100px;
+}
+#imp:hover,imp:active
+{
+	color: red;
+}
