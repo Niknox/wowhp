@@ -133,6 +133,14 @@ footer a
 {
 	color: #00BFFF;
 }
+div.faq ul
+{
+	list-style-position: inside;
+}
+div.faq ol
+{
+	list-style-position: inside;
+}
 div.faq h3
 {
 	color: #FFC85A;
