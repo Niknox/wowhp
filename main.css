@@ -76,6 +76,7 @@ article h3
 	font-size: 1.17em;
 	margin: 1em 0;
 	font-weight: bold;
+	color: #FFC85A;
 }
 article h4
 {
@@ -133,15 +134,15 @@ footer a
 {
 	color: #00BFFF;
 }
-div.faq ul
+div.list ul
 {
 	list-style-position: inside;
 }
-div.faq ol
+div.list ol
 {
 	list-style-position: inside;
 }
-div.faq h3
+div.list ul ul
 {
-	color: #FFC85A;
+	padding-left: 40px;
 }
