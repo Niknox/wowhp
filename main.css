@@ -146,3 +146,30 @@ div.list ul ul
 {
 	padding-left: 40px;
 }
+label
+{
+	width: 10em;
+	display: block;
+	float: left;
+}
+span.error
+{
+	color: #FF0000;
+}
+.button
+{
+	cursor: pointer;
+	border: 1px solid gray;
+	padding: 2px;
+	margin: 15px 0 0 8.875em;
+	color: #87CEFA;
+	background-color: #000000;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 1.125em;
+	font-weight: bold;
+}
+.button:hover
+{
+	color: #00BFFF;
+	background-color: #333333;
+}
