@@ -152,6 +152,10 @@ label
 	display: block;
 	float: left;
 }
+input
+{
+	width: 12em;
+}
 span.error
 {
 	color: #FF0000;
