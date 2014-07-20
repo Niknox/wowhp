@@ -171,6 +171,7 @@ span.error
 	font-family: Tahoma, Geneva, sans-serif;
 	font-size: 1.125em;
 	font-weight: bold;
+	width: 10.875em;
 }
 .button:hover
 {
