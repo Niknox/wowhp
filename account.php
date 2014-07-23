@@ -28,12 +28,13 @@
 	<hr class="main">
 	<article>
 	<h3>Hier kannst du einen Account erstellen:</h3>
-		<form action="process.php" method="post">
+		<form action="account.php" method="post">
 			<label for="name">Accountname:</label><input type="text" name="name"><span class="error"><?php echo $nameErr;?></span><br />
 			<label for="pw">Passwort:</label><input type="password" name="pw"><span class="error"><?php echo $pwErr;?></span><br />
 			<label for="pw2">Passwort bestätigen:</label><input type="password" name="pw2"><span class="error"><?php echo $pwErr;?></span><br />
 			<label for="email">E-Mail-Adresse:</label><input type="email" name="email"><span class="error"><?php echo $emailErr;?></span><br />
 			<input type="submit" name="submit" value="Submit" class="button">
+			<?php include 'process.php';?>
 			<?php echo $success;?>
 		</form>
 	</article>
