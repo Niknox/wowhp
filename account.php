@@ -19,6 +19,7 @@
 	<nav>
 		<ul>
 			<li><a class="navbar" href="index.html">Startseite</a></li>
+			<li><a class="navbar" href="forum/index.php">Forum</a></li>
 			<li><a class="navbar" href="regeln.html">Regeln</a></li>
 			<li><a class="navbar" href="faq.html">FAQ</a></li>
 			<li><a class="navbar" href="account.php">Account</a></li>
@@ -33,7 +34,7 @@
 		$nameErr = $pwErr = $emailErr = $success = "";
 		$name_insert = $pw_insert = $email_insert = "";
 		$name_available = "";
-		include 'mysql.php';
+		require_once 'mysql.php';
 		function test_input($data)
 			{
 				$data = trim($data);

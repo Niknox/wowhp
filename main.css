@@ -22,9 +22,9 @@ body
 nav ul
 {
 	list-style-type: none;
-	width: 750px;
+	width: 850px;
 	position: relative;
-	left: 241px;
+	left: 175px;
 	margin-bottom: 20px;
 }
 nav li
@@ -177,4 +177,13 @@ span.error
 {
 	color: #00BFFF;
 	background-color: #333333;
+}
+span.timestamp
+{
+	font-style: italic;
+}
+span.announcer
+{
+	font-weight: bold;
+	margin-right: 12px;
 }
