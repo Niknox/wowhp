@@ -82,8 +82,8 @@
 																							$email_insert = mysqli_real_escape_string($connect, $email);
 																							$name_insert = strtoupper($name_insert);
 																							$hash = SHA1(strtoupper($name_insert.':'.$pw_insert)); //Passworthash erstellen
-																							$sql="INSERT INTO `account` (username, sha_pass_hash, email, expansion, os) VALUES ('$name_insert', '$hash', '$email_insert', '2', 'Win')";
-																							if (!mysqli_query($connect,$sql))
+																							$query="INSERT INTO `account` (username, sha_pass_hash, email, expansion, os) VALUES ('$name_insert', '$hash', '$email_insert', '2', 'Win')";
+																							if (!mysqli_query($connect,$query))
 																								{
 																									die('Error: ' . mysqli_error($connect));
 																								}
