@@ -44,10 +44,10 @@
 			}
 		?>
 		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-			<label for="name">Accountname:</label><input type="text" name="name"><span class="error"><?php echo $nameErr;?></span><br />
-			<label for="pw">Passwort:</label><input type="password" name="pw"><span class="error"><?php echo $pwErr;?></span><br />
-			<label for="pw2">Passwort bestätigen:</label><input type="password" name="pw2"><span class="error"><?php echo $pwErr;?></span><br />
-			<label for="email">E-Mail-Adresse:</label><input type="email" name="email"><span class="error"><?php echo $emailErr;?></span><br />
+			<label for="name">Accountname:</label><input type="text" name="name"><br />
+			<label for="pw">Passwort:</label><input type="password" name="pw"><span style="font-size:75%;margin-left:50px;">Passwort vergessen? <a href="forgotpw.php">Hier klicken!</a></span><br />
+			<label for="pw2">Passwort bestätigen:</label><input type="password" name="pw2"><br />
+			<label for="email">E-Mail-Adresse:</label><input type="email" name="email"><br />
 			<input type="submit" name="submit" value="Submit" class="button">
 			<?php
 			$name = test_input($_POST["name"]);
@@ -142,7 +142,7 @@
 					$success = "Fehler beim Aufbau der Datenbankverbindung. Sollte dieser Fehler erneut auftreten, kontaktieren Sie bitte einen Administrator. Fehlercode: 10";
 				}
 			?>
-			<br /><?php echo $nameErr;echo $pwErr;echo $emailErr;echo $success;?>
+			<br /><span class="error"><?php echo $nameErr;echo $pwErr;echo $emailErr;echo $success;?></span>
 		</form>
 	</article>
 	<hr class="main">

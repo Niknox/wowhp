@@ -46,7 +46,7 @@
 			$i="0";
 			if (mysqli_connect_errno())
 				{
-					printf("Connect failed: %s\n", mysqli_connect_error());
+					echo "Connect failed: %s\n", mysqli_connect_error());
 					exit();
 				}
 			$query="SELECT * FROM `characters` ORDER BY `totalKills` DESC LIMIT 0,10";
