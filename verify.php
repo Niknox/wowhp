@@ -5,7 +5,7 @@
 	<meta name="keywords" content="xserv, wow, xserv wow, world of warcraft, blizzlike, privatserver, 3.3.5a, wotlk">
 	<meta name="description" content="Xserv ist ein kostenoser WoW Blizzlike-Server mit kompetentem Team und freundlicher Community">
 	<meta name="author" content="Nikno">
-	<title>Xserv WoW: Passwort vergessen</title>
+	<title>Xserv WoW: Accountverifizierung</title>
 	<link rel="icon" href="images/favicon.gif" type="image/x-icon">
 	<link rel="stylesheet" href="main.css">
 	<!--[if lt IE 9]>
@@ -27,6 +27,7 @@
 		</ul>
 	</nav>
 	<hr class="main">
+	<h3>Accountaktivierung</h3>
 	<?php
 	require_once 'mysql.php';
 	function test_input($data)
@@ -34,27 +35,37 @@
 		$data = trim($data);
 		$data = stripslashes($data);
 		$data = htmlspecialchars($data);
-		$data = mysqli_real_escape_string($connect, $data);
 		return $data;
 	}
 	$email = test_input($_GET['email']);
 	$key = test_input($_GET['key']);
-	$query = "SELECT * FROM activate WHERE email ='$email' and isactive = 1";
-	$result = mysqli_query($connect,$query);
+	$emailIns = mysqli_real_escape_string($connect, $email);
+	$keyIns = mysqli_real_escape_string($connect, $key);
 
 	if (isset($email) && isset($key))
 	{
-		mysqli_query($connect, "UPDATE `activation`, `account` SET activation.isactive=yes, account.locked='0' WHERE activation.email='$email' AND activation.hash='$key' AND account.email='$email' ") or die(mysqli_error());
+		$query1 = "UPDATE `activation` SET isactive='yes' WHERE mail='$emailIns' AND hash='$keyIns'";
+		$query2 = "UPDATE `account` SET locked='0' WHERE email='$emailIns'";
+		if(!mysqli_query($connect, $query1))
+		{
+			die('Error: ' . mysqli_error($connect) . ' Fehlercode: 23');
+		}
+		if(!mysqli_query($connect, $query2))
+		{
+			die('Error: ' . mysqli_error($connect) . ' Fehlercode: 22');
+		}
 		if (mysqli_affected_rows($connect) == 1)
 		{
-			echo '<div>Dein Account wurde erfolgreich aktiviert.</div>';
-			
+			echo 'Dein Account wurde erfolgreich aktiviert.';
 		}
 		else
 		{
-			echo '<div>Account konnte nicht aktiviert werden.</div>';
+			echo 'Fehler bei der Erstellung deines Accounts. Fehlercode: 20';
 		}
 	}
+	else
+	{
+		echo 'Fehler bei der Erstellung deines Accounts. Fehlercode: 21';
 	mysqli_close($connect);
 	?>
 </body>

@@ -32,13 +32,13 @@
 		<?php
 		$name = $pw = $pw2 = $email = "";
 		$nameErr = $pwErr = $emailErr = $success = "";
+		$nameIns = $pwIns = $emailIns = "";
 		require_once 'mysql.php';
 		function test_input($data)
 		{
 			$data = trim($data);
 			$data = stripslashes($data);
 			$data = htmlspecialchars($data);
-			$data = mysqli_real_escape_string($connect, $data);
 			return $data;
 		}
 		?>
@@ -61,7 +61,8 @@
 					{
 						if (preg_match("/^[a-zA-Z0-9]{3,20}$/",$name)) //Verifiziere Accountname
 						{
-							$nameAvail = "SELECT * FROM `account` WHERE `username` = '$name'";
+							$nameIns=mysqli_real_escape_string($connect, $name);
+							$nameAvail = "SELECT * FROM `account` WHERE `username` = '$nameIns'";
 							mysqli_query($connect,$nameAvail);
 							$rows = mysqli_affected_rows($connect);
 							if ($rows == 0) //Accountname noch nicht vorhanden
@@ -76,9 +77,11 @@
 											{
 												if (!empty($email)) //Feld Email nicht leer
 												{
-													$name = strtoupper($name); //In Grossbuchstaben umwandeln
-													$hash = SHA1(strtoupper($name.':'.$pw)); //Passworthash erstellen
-													$query="INSERT INTO `account` (username, sha_pass_hash, email, locked, expansion, os) VALUES ('$name', '$hash', '$email', '1', '2', 'Win')";
+													$pwIns=mysqli_real_escape_string($connect, $pw);
+													$emailIns=mysqli_real_escape_string($connect, $email);
+													$nameIns = strtoupper($nameIns); //In Grossbuchstaben umwandeln
+													$hash = SHA1(strtoupper($nameIns.':'.$pwIns)); //Passworthash erstellen
+													$query="INSERT INTO `account` (username, sha_pass_hash, email, last_ip, locked, expansion, os) VALUES ('$nameIns', '$hash', '$emailIns', '127.0.0.1', '1', '2', 'Win')";
 													if (!mysqli_query($connect,$query))
 													{
 														die('Error: ' . mysqli_error($connect));
@@ -89,10 +92,10 @@
 														$created = date("Y-m-d H:i:s");
 														$hash = md5(uniqid(rand(), true));
 														
-														$query="INSERT INTO `activation` (hash, created, mail, isactive) VALUES ('$hash', '$created', '$email', 'no')";
+														$query="INSERT INTO `activation` (hash, created, mail, isactive) VALUES ('$hash', '$created', '$emailIns', 'no')";
 														mysqli_query($connect,$query);
 														
-														$url='http://wow.xserv.net/verify.php?email=' . urlencode($email) . "&key=$hash";
+														$url='http://wow.xserv.net/verify.php?email=' . urlencode($emailIns) . "&key=$hash";
 														mail($email, "Registrierung bei Xserv WoW abschließen", "Hallo $name,\n\num die Registierung abzuschließen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spaß auf Xserv WoW!");
 													}
 												}
