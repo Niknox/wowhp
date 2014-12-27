@@ -5,7 +5,7 @@
 	<meta name="keywords" content="xserv, wow, xserv wow, world of warcraft, blizzlike, privatserver, 3.3.5a, wotlk">
 	<meta name="description" content="Xserv ist ein kostenoser WoW Blizzlike-Server mit kompetentem Team und freundlicher Community">
 	<meta name="author" content="Nikno">
-	<title>Top-Liste: Ehre</title>
+	<title>Xserv WoW: Top-Liste/Ehre</title>
 	<link rel="icon" href="images/favicon.gif" type="image/x-icon">
 	<link rel="stylesheet" href="main.css">
 	<!--[if lt IE 9]>
@@ -19,7 +19,7 @@
 	<nav>
 		<ul>
 			<li><a class="navbar" href="index.html">Startseite</a></li>
-			<li><a class="navbar" href="forum/index.php">Forum</a></li>
+			<li><a class="navbar" href="forum/index.php/BoardList/">Forum</a></li>
 			<li><a class="navbar" href="regeln.html">Regeln</a></li>
 			<li><a class="navbar" href="faq.html">FAQ</a></li>
 			<li><a class="navbar" href="account.php">Account</a></li>
@@ -46,7 +46,7 @@
 			$i="0";
 			if (mysqli_connect_errno())
 			{
-				echo "Connect failed: %s\n", mysqli_connect_error());
+				echo "Connect failed: %s\n", mysqli_connect_error();
 				exit();
 			}
 			$query="SELECT * FROM `characters` ORDER BY `totalKills` DESC LIMIT 0,10";
