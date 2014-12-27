@@ -32,14 +32,13 @@
 		<?php
 		$name = $pw = $pw2 = $email = "";
 		$nameErr = $pwErr = $emailErr = $success = "";
-		$name_insert = $pw_insert = $email_insert = "";
-		$name_available = "";
 		require_once 'mysql.php';
 		function test_input($data)
 		{
 			$data = trim($data);
 			$data = stripslashes($data);
 			$data = htmlspecialchars($data);
+			$data = mysqli_real_escape_string($connect, $data);
 			return $data;
 		}
 		?>
@@ -62,9 +61,8 @@
 					{
 						if (preg_match("/^[a-zA-Z0-9]{3,20}$/",$name)) //Verifiziere Accountname
 						{
-							$name_insert = mysqli_real_escape_string($connect, $name);
-							$nametest = "SELECT * FROM `account` WHERE `username` = '$name_insert'";
-							mysqli_query($connect,$nametest);
+							$nameAvail = "SELECT * FROM `account` WHERE `username` = '$name'";
+							mysqli_query($connect,$nameAvail);
 							$rows = mysqli_affected_rows($connect);
 							if ($rows == 0) //Accountname noch nicht vorhanden
 							{
@@ -76,20 +74,26 @@
 										{
 											if (preg_match("/^(?=.*[A-Za-z])[a-zA-Z0-9!?*+-.,]{6,20}$/",$pw)) //Verifiziere Passwort (mind. 6 Zeichen, mind. ein Buchstabe)
 											{
-												$pw_insert = mysqli_real_escape_string($connect, $pw);
 												if (!empty($email)) //Feld Email nicht leer
 												{
-													$email_insert = mysqli_real_escape_string($connect, $email);
-													$name_insert = strtoupper($name_insert);
-													$hash = SHA1(strtoupper($name_insert.':'.$pw_insert)); //Passworthash erstellen
-													$query="INSERT INTO `account` (username, sha_pass_hash, email, expansion, os) VALUES ('$name_insert', '$hash', '$email_insert', '2', 'Win')";
+													$name = strtoupper($name); //In Grossbuchstaben umwandeln
+													$hash = SHA1(strtoupper($name.':'.$pw)); //Passworthash erstellen
+													$query="INSERT INTO `account` (username, sha_pass_hash, email, locked, expansion, os) VALUES ('$name', '$hash', '$email', '1', '2', 'Win')";
 													if (!mysqli_query($connect,$query))
 													{
 														die('Error: ' . mysqli_error($connect));
 													}
 													else
 													{
-														$success = "Account erfolgreich erstellt.";
+														$success = "Daten validiert. Es wurde eine Aktivierungsmail an dich gesendet. Bitte klicke auf den Link um die Accounterstellung abzuschließen.";
+														$created = date("Y-m-d H:i:s");
+														$hash = md5(uniqid(rand(), true));
+														
+														$query="INSERT INTO `activation` (hash, created, mail, isactive) VALUES ('$hash', '$created', '$email', 'no')";
+														mysqli_query($connect,$query);
+														
+														$url='http://wow.xserv.net/verify.php?email=' . urlencode($email) . "&key=$hash";
+														mail($email, "Registrierung bei Xserv WoW abschließen", "Hallo $name,\n\num die Registierung abzuschließen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spaß auf Xserv WoW!");
 													}
 												}
 												else
@@ -134,7 +138,7 @@
 				}
 				else
 				{
-					//$success = "Generischer Fehler in der Datenübertragung. Sollte dieser Fehler erneut auftreten, kontaktieren Sie bitte einen Administrator. Fehlercode: 11";
+					$success = "Generischer Fehler in der Datenübertragung. Sollte dieser Fehler erneut auftreten, kontaktieren Sie bitte einen Administrator. Fehlercode: 11";
 				}
 			}
 			else
