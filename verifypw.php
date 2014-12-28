@@ -39,13 +39,11 @@
 		return $data;
 	}
 	?>
-		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-		<label for="name">Neues Passwort:</label><input type="password" name="pw"><br />
-		<label for="email">Passwort bestätigen:</label><input type="password" name="pw2"><br />
+		<form action="verifypw.php?email=<?php echo $_GET['email'];?>&key=<?php echo $_GET['key'];?>" method="post">
+		<label for="pw">Neues Passwort:</label><input type="password" name="pw"><br />
+		<label for="pw2">Passwort bestätigen:</label><input type="password" name="pw2"><br />
 		<input type="submit" name="submit" value="Submit" class="button">
 		<?php
-		$pw = test_input($_POST['pw']);
-		$pw2 = test_input($_POST['pw2']);
 		$email = test_input($_GET['email']);
 		$key = test_input($_GET['key']);
 		$pwIns = mysqli_real_escape_string($connect, $pw);
@@ -53,7 +51,9 @@
 		$keyIns = mysqli_real_escape_string($connect, $key);
 		if ($_SERVER["REQUEST_METHOD"] == "POST") //Formularverbindung testen
 		{
-			if (isset($email) && isset($key))
+			$pw = test_input($_POST['pw']);
+			$pw2 = test_input($_POST['pw2']);
+			if (isset($emailIns) && isset($keyIns))
 			{
 				if (!empty($pw))
 				{
@@ -70,10 +70,15 @@
 								{
 									$nameIns = strtoupper($nameIns); //In Grossbuchstaben umwandeln
 									$hash = SHA1(strtoupper($nameIns.':'.$pwIns)); //Passworthash erstellen
-									$query="UPDATE `account` SET sha_pass_hash='$hash' WHERE mail='$emailIns'";
+									$query="UPDATE `account` SET sha_pass_hash='$hash' WHERE email='$emailIns'";
+									$query2="UPDATE `activation` SET hash2 = '' WHERE mail = '$emailIns'";
 									if (!mysqli_query($connect,$query))
 									{
-										die($error = 'Error: ' . mysqli_error($connect) . 'Fehlercode: 32');
+										die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 32');
+									}
+									if (!mysqli_query($connect,$query2))
+									{
+										die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 31');
 									}
 									else
 									{
@@ -111,7 +116,7 @@
 			}
 		}
 		?>
-		<br /><span class="error"><?php echo $error?></span><span class="success"><?php echo $success;?></span>				
+		<br /><span class="error"><?php echo $error?></span><span class="success"><?php echo $success;?></span>
 		</form>
 	</article>
 	<hr class="main">

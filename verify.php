@@ -46,7 +46,7 @@
 	if (isset($email) && isset($key))
 	{
 		$query1 = "UPDATE `activation` SET isactive='yes' WHERE mail='$emailIns' AND hash='$keyIns'";
-		$query2 = "UPDATE `account` SET locked='0' WHERE email='$emailIns'";
+		$query2 = "UPDATE `account`, `activation` SET account.locked='0' WHERE account.email='$emailIns' AND activation.hash='$keyIns'";
 		if (!mysqli_query($connect, $query1))
 		{
 			die($error='Error: ' . mysqli_error($connect) . ' Fehlercode: 23');
