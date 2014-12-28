@@ -53,7 +53,7 @@
 		{
 			$pw = test_input($_POST['pw']);
 			$pw2 = test_input($_POST['pw2']);
-			if (isset($emailIns) && isset($keyIns))
+			if (!empty($emailIns) && !empty($keyIns))
 			{
 				if (!empty($pw))
 				{
