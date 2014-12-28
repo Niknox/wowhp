@@ -41,7 +41,7 @@
 	?>
 		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 		<label for="name">Neues Passwort:</label><input type="password" name="pw"><br />
-		<label for="email">Neues Passwort bestätigen:</label><input type="password" name="pw2"><br />
+		<label for="email">Passwort bestätigen:</label><input type="password" name="pw2"><br />
 		<input type="submit" name="submit" value="Submit" class="button">
 		<?php
 		$pw = test_input($_POST['pw']);
@@ -51,61 +51,64 @@
 		$pwIns = mysqli_real_escape_string($connect, $pw);
 		$emailIns = mysqli_real_escape_string($connect, $email);
 		$keyIns = mysqli_real_escape_string($connect, $key);
-		if (isset($email) && isset($key))
+		if ($_SERVER["REQUEST_METHOD"] == "POST") //Formularverbindung testen
 		{
-			if (!empty($pw))
+			if (isset($email) && isset($key))
 			{
-				if (!empty($pw2))
+				if (!empty($pw))
 				{
-					if ($pw == $pw2)
+					if (!empty($pw2))
 					{
-						if (preg_match("/^(?=.*[A-Za-z])[a-zA-Z0-9!?*+-.,]{6,20}$/",$pw))
+						if ($pw == $pw2)
 						{
-							$query = "SELECT * FROM `activation` WHERE `email` = '$emailIns' AND `hash2` = '$keyIns'";
-							mysqli_query($connect,$query);
-							$rows = mysqli_affected_rows($connect);
-							if ($rows == 1)
+							if (preg_match("/^(?=.*[A-Za-z])[a-zA-Z0-9!?*+-.,]{6,20}$/",$pw))
 							{
-								$nameIns = strtoupper($nameIns); //In Grossbuchstaben umwandeln
-								$hash = SHA1(strtoupper($nameIns.':'.$pwIns)); //Passworthash erstellen
-								$query="UPDATE `account` SET sha_pass_hash='$hash' WHERE mail='$emailIns'";
-								if (!mysqli_query($connect,$query))
+								$query = "SELECT * FROM `activation` WHERE `mail` = '$emailIns' AND `hash2` = '$keyIns'";
+								mysqli_query($connect,$query);
+								$rows = mysqli_affected_rows($connect);
+								if ($rows == 1)
 								{
-									die($error = 'Error: ' . mysqli_error($connect) . 'Fehlercode: 32');
+									$nameIns = strtoupper($nameIns); //In Grossbuchstaben umwandeln
+									$hash = SHA1(strtoupper($nameIns.':'.$pwIns)); //Passworthash erstellen
+									$query="UPDATE `account` SET sha_pass_hash='$hash' WHERE mail='$emailIns'";
+									if (!mysqli_query($connect,$query))
+									{
+										die($error = 'Error: ' . mysqli_error($connect) . 'Fehlercode: 32');
+									}
+									else
+									{
+										$success = "Passwort erfolgreich geändert.";
+									}
 								}
 								else
 								{
-									$success = "Passwort erfolgreich geändert.";
+									$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 30";
 								}
 							}
 							else
 							{
-								$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 30";
+								$error="Das Passwort ist zu kurz (mind. 6 Stellen), zu lang (max. 20 Stellen), oder enthält nicht erlaubte Zeichen. Erlaubt sind: A-Z, a-z, 0-9, !?*+-.,";
 							}
 						}
 						else
 						{
-							$error="Das Passwort ist zu kurz (mind. 6 Stellen), zu lang (max. 20 Stellen), oder enthält nicht erlaubte Zeichen. Erlaubt sind: A-Z, a-z, 0-9, !?*+-.,";
+							$error="Die Passwörter stimmen nicht überein.";
 						}
 					}
 					else
 					{
-						$error="Die Passwörter stimmen nicht überein.";
+						$error="Bitte gib dein Passwort zur Bestätigung ein.";
 					}
 				}
 				else
 				{
-					$error="Bitte gib dein Passwort zur Bestätigung ein.";
+					$error="Bitte gib ein Passwort ein.";
 				}
 			}
 			else
 			{
-				$error="Bitte gib ein Passwort ein.";
+				$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 33";
 			}
-		}
-		else
-		{
-			$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 33";
 		}
 		?>
 		<br /><span class="error"><?php echo $error?></span><span class="success"><?php echo $success;?></span>				

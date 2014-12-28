@@ -65,11 +65,11 @@
 								$created = date("Y-m-d H:i:s");
 								$hash = md5(uniqid(rand(), true));
 								
-								$query="INSERT INTO `activation` (hash2, created2) VALUES ('$hash', '$created')";
+								$query="UPDATE `activation` SET hash2 = '$hash', created2 = '$created' WHERE mail='$emailIns'";
 								mysqli_query($connect,$query);
 								
 								$url='http://wow.xserv.net/verifypw.php?email=' . urlencode($emailIns) . "&key=$hash";
-								mail($email, "Passwort bei Xserv WoW zur&#252;cksetzen", "Hallo $name,\n\num dein Passwort zur&#252;ckzusetzen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spa&#223; auf Xserv WoW!");
+								mail($email, "Passwort bei Xserv WoW zuruecksetzen", "Hallo $name,\n\num dein Passwort zurueckzusetzen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spass auf Xserv WoW!");
 								mysqli_close($connect);
 							}
 							else

@@ -96,7 +96,7 @@
 														mysqli_query($connect,$query);
 														
 														$url='http://wow.xserv.net/verify.php?email=' . urlencode($emailIns) . "&key=$hash";
-														mail($email, "Registrierung bei Xserv WoW abschließen", "Hallo $name,\n\num die Registierung abzuschlie&#223;en, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spa&#223; auf Xserv WoW!");
+														mail($email, "Registrierung bei Xserv WoW abschliessen", "Hallo $name,\n\num die Registierung abzuschliessen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spass; auf Xserv WoW!");
 														mysqli_close($connect);
 													}
 												}
