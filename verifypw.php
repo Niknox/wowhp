@@ -62,31 +62,25 @@
 						if (preg_match("/^(?=.*[A-Za-z])[a-zA-Z0-9!?*+-.,]{6,20}$/",$pw))
 						{
 							$query = "SELECT * FROM `activation` WHERE `email` = '$emailIns' AND `hash2` = '$keyIns'";
-							if (!mysqli_connect_errno())
+							mysqli_query($connect,$query);
+							$rows = mysqli_affected_rows($connect);
+							if ($rows == 1)
 							{
-								if (mysqli_affected_rows($connect) == 1)
+								$nameIns = strtoupper($nameIns); //In Grossbuchstaben umwandeln
+								$hash = SHA1(strtoupper($nameIns.':'.$pwIns)); //Passworthash erstellen
+								$query="UPDATE `account` SET sha_pass_hash='$hash' WHERE mail='$emailIns'";
+								if (!mysqli_query($connect,$query))
 								{
-									$nameIns = strtoupper($nameIns); //In Grossbuchstaben umwandeln
-									$hash = SHA1(strtoupper($nameIns.':'.$pwIns)); //Passworthash erstellen
-									$query="UPDATE `account` SET sha_pass_hash='$hash' WHERE mail='$emailIns'";
-									if (!mysqli_query($connect,$query))
-									{
-										die($error = 'Error: ' . mysqli_error($connect) . 'Fehlercode: 32');
-									}
-									else
-									{
-										$success = "Passwort erfolgreich geändert.";
-									}
+									die($error = 'Error: ' . mysqli_error($connect) . 'Fehlercode: 32');
 								}
 								else
 								{
-									$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 31";
+									$success = "Passwort erfolgreich geändert.";
 								}
 							}
 							else
 							{
 								$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 30";
-								
 							}
 						}
 						else

@@ -56,28 +56,21 @@
 						{
 							$nameIns=mysqli_real_escape_string($connect, $name);
 							$emailIns=mysqli_real_escape_string($connect, $email);
-							$nameAvail = "SELECT * FROM `account` WHERE `username` = '$nameIns' AND `email` = '$emailIns'";
-							mysqli_query($connect,$nameAvail);
+							$query = "SELECT * FROM `account` WHERE `username` = '$nameIns' AND `email` = '$emailIns'";
+							mysqli_query($connect,$query);
 							$rows = mysqli_affected_rows($connect);
 							if ($rows == 1)
 							{
-								if (!mysqli_query($connect,$query))
-								{
-									die($error = 'Error: ' . mysqli_error($connect) . 'Fehlercode: 11');
-								}
-								else
-								{
-									$success = "Daten validiert. Es wurde eine Bestätigungsmail an dich gesendet. Bitte klicke auf den Link um dein Passwort zurückzusetzen.";
-									$created = date("Y-m-d H:i:s");
-									$hash = md5(uniqid(rand(), true));
-									
-									$query="INSERT INTO `activation` (hash2, created2) VALUES ('$hash', '$created')";
-									mysqli_query($connect,$query);
-									
-									$url='http://wow.xserv.net/verifypw.php?email=' . urlencode($emailIns) . "&key=$hash";
-									mail($email, "Passwort bei Xserv WoW zur&#252;cksetzen", "Hallo $name,\n\num dein Passwort zur&#252;ckzusetzen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spa&#223; auf Xserv WoW!");
-									mysqli_close($connect);
-								}
+								$success = "Daten validiert. Es wurde eine Bestätigungsmail an dich gesendet. Bitte klicke auf den Link um dein Passwort zurückzusetzen.";
+								$created = date("Y-m-d H:i:s");
+								$hash = md5(uniqid(rand(), true));
+								
+								$query="INSERT INTO `activation` (hash2, created2) VALUES ('$hash', '$created')";
+								mysqli_query($connect,$query);
+								
+								$url='http://wow.xserv.net/verifypw.php?email=' . urlencode($emailIns) . "&key=$hash";
+								mail($email, "Passwort bei Xserv WoW zur&#252;cksetzen", "Hallo $name,\n\num dein Passwort zur&#252;ckzusetzen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spa&#223; auf Xserv WoW!");
+								mysqli_close($connect);
 							}
 							else
 							{
