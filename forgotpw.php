@@ -40,8 +40,8 @@
 		}
 		?>
 		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-			<label for="name">Accountname:</label><input type="text" name="name"><span style="font-size:75%;margin-left:50px;">Du hast deinen Accountnamen vergessen? Kontaktiere bitte einen Administrator.</span><br />
-			<label for="email">E-Mail-Adresse:</label><input type="email" name="email"><br />
+			<label for="name">Accountname:</label><input type="text" name="name" id="name"><span style="font-size:75%;margin-left:50px;">Du hast deinen Accountnamen vergessen? Kontaktiere bitte einen Administrator.</span><br />
+			<label for="email">E-Mail-Adresse:</label><input type="email" name="email" id="email"><br />
 			<input type="submit" name="submit" value="Submit" class="button">
 			<?php
 			$name = test_input($_POST["name"]);

@@ -39,9 +39,9 @@
 		return $data;
 	}
 	?>
-		<form action="verifypw.php?email=<?php echo $_GET['email'];?>&key=<?php echo $_GET['key'];?>" method="post">
-		<label for="pw">Neues Passwort:</label><input type="password" name="pw"><br />
-		<label for="pw2">Passwort bestätigen:</label><input type="password" name="pw2"><br />
+		<form action="verifypw.php?email=<?php echo $_GET['email'];?>&amp;key=<?php echo $_GET['key'];?>" method="post">
+		<label for="pw">Neues Passwort:</label><input type="password" name="pw" id="pw"><br />
+		<label for="pw2">Passwort bestätigen:</label><input type="password" name="pw2" id="pw2"><br />
 		<input type="submit" name="submit" value="Submit" class="button">
 		<?php
 		$email = test_input($_GET['email']);
