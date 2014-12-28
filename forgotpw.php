@@ -90,7 +90,7 @@
 			}
 			else
 			{
-				$error="Fehler beim Aufbau der Datenbankverbindung. Sollte dieser Fehler erneut auftreten, kontaktieren Sie bitte einen Administrator. Fehlercode: 10";
+				$error="Fehler beim Aufbau der Datenbankverbindung. Sollte dieser Fehler erneut auftreten, kontaktieren Sie bitte einen Administrator. Fehlercode: 30";
 			}
 			?>
 			<br /><span class="error"><?php echo $error?></span><span class="success"><?php echo $success;?></span>

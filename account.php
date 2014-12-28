@@ -84,7 +84,7 @@
 													$query="INSERT INTO `account` (username, sha_pass_hash, email, last_ip, locked, expansion, os) VALUES ('$nameIns', '$hash', '$emailIns', '127.0.0.1', '1', '2', 'Win')";
 													if (!mysqli_query($connect,$query))
 													{
-														die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 11');
+														die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 15');
 													}
 													else
 													{

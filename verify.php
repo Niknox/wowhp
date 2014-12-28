@@ -49,11 +49,11 @@
 		$query2 = "UPDATE `account`, `activation` SET account.locked='0' WHERE account.email='$emailIns' AND activation.hash='$keyIns'";
 		if (!mysqli_query($connect, $query1))
 		{
-			die($error='Error: ' . mysqli_error($connect) . ' Fehlercode: 23');
+			die($error='Error: ' . mysqli_error($connect) . ' Fehlercode: 25');
 		}
 		if (!mysqli_query($connect, $query2))
 		{
-			die($error='Error: ' . mysqli_error($connect) . ' Fehlercode: 22');
+			die($error='Error: ' . mysqli_error($connect) . ' Fehlercode: 26');
 		}
 		if (mysqli_affected_rows($connect) == 1)
 		{
@@ -61,7 +61,7 @@
 		}
 		else
 		{
-			$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 20";
+			$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 24";
 		}
 	}
 	else

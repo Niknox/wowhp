@@ -74,11 +74,11 @@
 									$query2="UPDATE `activation` SET hash2 = '' WHERE mail = '$emailIns'";
 									if (!mysqli_query($connect,$query))
 									{
-										die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 32');
+										die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 45');
 									}
 									if (!mysqli_query($connect,$query2))
 									{
-										die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 31');
+										die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 46');
 									}
 									else
 									{
@@ -87,7 +87,7 @@
 								}
 								else
 								{
-									$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 30";
+									$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 42";
 								}
 							}
 							else
@@ -112,7 +112,7 @@
 			}
 			else
 			{
-				$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 33";
+				$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 41";
 			}
 		}
 		?>
