@@ -27,7 +27,8 @@
 		</ul>
 	</nav>
 	<hr class="main">
-	<h3>Accountaktivierung</h3>
+	<article>
+	<div class="center"><h2>Accountaktivierung</h2></div>
 	<?php
 	require_once 'mysql.php';
 	function test_input($data)
@@ -46,27 +47,37 @@
 	{
 		$query1 = "UPDATE `activation` SET isactive='yes' WHERE mail='$emailIns' AND hash='$keyIns'";
 		$query2 = "UPDATE `account` SET locked='0' WHERE email='$emailIns'";
-		if(!mysqli_query($connect, $query1))
+		if (!mysqli_query($connect, $query1))
 		{
-			die('Error: ' . mysqli_error($connect) . ' Fehlercode: 23');
+			die($error='Error: ' . mysqli_error($connect) . ' Fehlercode: 23');
 		}
-		if(!mysqli_query($connect, $query2))
+		if (!mysqli_query($connect, $query2))
 		{
-			die('Error: ' . mysqli_error($connect) . ' Fehlercode: 22');
+			die($error='Error: ' . mysqli_error($connect) . ' Fehlercode: 22');
 		}
 		if (mysqli_affected_rows($connect) == 1)
 		{
-			echo 'Dein Account wurde erfolgreich aktiviert.';
+			$success='Dein Account wurde erfolgreich aktiviert.<br><br><a href="index.html">Zurück zur Startseite</a>';
 		}
 		else
 		{
-			echo 'Fehler bei der Erstellung deines Accounts. Fehlercode: 20';
+			$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 20";
 		}
 	}
 	else
 	{
-		echo 'Fehler bei der Erstellung deines Accounts. Fehlercode: 21';
+		$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 21";
+	}
 	mysqli_close($connect);
 	?>
+	<br /><span class="error"><?php echo $error?></span><span class="success"><?php echo $success;?></span>
+	</article>
+	<hr class="main">
+	<footer>
+		&copy; 2014 Xserv - All rights reserved.
+		<a id="imp" href="impressum.html">Impressum</a>
+		<a href="http://jigsaw.w3.org/css-validator/validator?uri=wow.xserv.net&amp;profile=css3&amp;usermedium=all&amp;warning=1&amp;vextwarning="><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="CSS is valid!"> </a>
+		<a href="http://validator.w3.org/check?uri=http%3A%2F%2Fwow.xserv.net%2F"><img style="border:0;width:88px;height:31px" src="http://upload.wikimedia.org/wikipedia/commons/b/bb/W3C_HTML5_certified.png" alt="HTML5 is valid!"> </a>
+	</footer>
 </body>
 </html>

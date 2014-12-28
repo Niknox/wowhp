@@ -160,6 +160,10 @@ span.error
 {
 	color: #FF0000;
 }
+span.success
+{
+	color: #00FF00;
+}
 .button
 {
 	cursor: pointer;

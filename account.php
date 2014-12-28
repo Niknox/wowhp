@@ -31,7 +31,7 @@
 	<h3>Hier kannst du einen Account erstellen:</h3>
 		<?php
 		$name = $pw = $pw2 = $email = "";
-		$nameErr = $pwErr = $emailErr = $success = "";
+		$nameErr = $pwErr = $emailErr = $success = $error = "";
 		$nameIns = $pwIns = $emailIns = "";
 		require_once 'mysql.php';
 		function test_input($data)
@@ -84,7 +84,7 @@
 													$query="INSERT INTO `account` (username, sha_pass_hash, email, last_ip, locked, expansion, os) VALUES ('$nameIns', '$hash', '$emailIns', '127.0.0.1', '1', '2', 'Win')";
 													if (!mysqli_query($connect,$query))
 													{
-														die('Error: ' . mysqli_error($connect));
+														die($error = 'Error: ' . mysqli_error($connect) . 'Fehlercode: 11');
 													}
 													else
 													{
@@ -96,7 +96,8 @@
 														mysqli_query($connect,$query);
 														
 														$url='http://wow.xserv.net/verify.php?email=' . urlencode($emailIns) . "&key=$hash";
-														mail($email, "Registrierung bei Xserv WoW abschließen", "Hallo $name,\n\num die Registierung abzuschließen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spaß auf Xserv WoW!");
+														mail($email, "Registrierung bei Xserv WoW abschließen", "Hallo $name,\n\num die Registierung abzuschlie&#223;en, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spa&#223; auf Xserv WoW!");
+														mysqli_close($connect);
 													}
 												}
 												else
@@ -139,17 +140,13 @@
 						$nameErr = "Bitte gib einen Accountnamen ein.";
 					}
 				}
-				else
-				{
-					$success = "Generischer Fehler in der Datenübertragung. Sollte dieser Fehler erneut auftreten, kontaktieren Sie bitte einen Administrator. Fehlercode: 11";
-				}
 			}
 			else
 			{
-				$success = "Fehler beim Aufbau der Datenbankverbindung. Sollte dieser Fehler erneut auftreten, kontaktieren Sie bitte einen Administrator. Fehlercode: 10";
+				$error = "Fehler beim Aufbau der Datenbankverbindung. Sollte dieser Fehler erneut auftreten, kontaktieren Sie bitte einen Administrator. Fehlercode: 10";
 			}
 			?>
-			<br /><span class="error"><?php echo $nameErr;echo $pwErr;echo $emailErr;echo $success;?></span>
+			<br /><span class="error"><?php echo $nameErr;echo $pwErr;echo $emailErr;echo $error?></span><span class="success"><?php echo $success;?></span>
 		</form>
 	</article>
 	<hr class="main">
