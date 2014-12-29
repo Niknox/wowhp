@@ -69,7 +69,17 @@
 								mysqli_query($connect,$query);
 								
 								$url='http://wow.xserv.net/verifypw.php?email=' . urlencode($emailIns) . "&key=$hash";
-								mail($email, "Passwort bei Xserv WoW zuruecksetzen", "Hallo $name,\n\num dein Passwort zurueckzusetzen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spass auf Xserv WoW!");
+								$subject = "Xserv WoW Passwort zurücksetzen";
+								$headers   = array();
+								$headers[] = "MIME-Version: 1.0";
+								$headers[] = "Content-type: text/plain; charset=iso-8859-1";
+								$headers[] = "From: Xserv WoW <admin@xserv.net>";
+								$headers[] = "Reply-To: Xserv WoW <admin@xserv.net>";
+								$headers[] = "Subject: {$subject}";
+								$headers[] = "X-Mailer: PHP/".phpversion();
+								$mailtext = "Hallo $name,\n\num dein Passwort zurückzusetzen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nSollte es irgendwelche Probleme geben, kontaktiere einen Administrator.\n\nViel Spaß auf Xserv WoW!";
+
+								mail($email, $subject, $mailtext, implode("\r\n", $headers));
 								mysqli_close($connect);
 							}
 							else

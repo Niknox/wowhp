@@ -96,7 +96,17 @@
 														mysqli_query($connect,$query);
 														
 														$url='http://wow.xserv.net/verify.php?email=' . urlencode($emailIns) . "&key=$hash";
-														mail($email, "Registrierung bei Xserv WoW abschliessen", "Hallo $name,\n\num die Registierung abzuschliessen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spass; auf Xserv WoW!");
+														$subject = "Registrierung bei Xserv WoW abschließen";
+														$headers   = array();
+														$headers[] = "MIME-Version: 1.0";
+														$headers[] = "Content-type: text/plain; charset=iso-8859-1";
+														$headers[] = "From: Xserv WoW <admin@xserv.net>";
+														$headers[] = "Reply-To: Xserv WoW <admin@xserv.net>";
+														$headers[] = "Subject: {$subject}";
+														$headers[] = "X-Mailer: PHP/".phpversion();
+														$mailtext = "Hallo $name,\n\num die Registrierung abzuschließen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spaß auf Xserv WoW!";
+
+														mail($email, $subject, $mailtext, implode("\r\n", $headers));
 														mysqli_close($connect);
 													}
 												}
