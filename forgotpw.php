@@ -72,7 +72,7 @@
 								$subject = "Xserv WoW Passwort zurücksetzen";
 								$headers   = array();
 								$headers[] = "MIME-Version: 1.0";
-								$headers[] = "Content-type: text/plain; charset=iso-8859-1";
+								$headers[] = "Content-type: text/plain; charset=utf-8";
 								$headers[] = "From: Xserv WoW <admin@xserv.net>";
 								$headers[] = "Reply-To: Xserv WoW <admin@xserv.net>";
 								$headers[] = "Subject: {$subject}";
