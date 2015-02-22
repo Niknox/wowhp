@@ -156,7 +156,7 @@
 				$error = "Fehler beim Aufbau der Datenbankverbindung. Sollte dieser Fehler erneut auftreten, kontaktieren Sie bitte einen Administrator. Fehlercode: 10";
 			}
 			?>
-			<br /><span class="error"><?php echo $nameErr;echo $pwErr;echo $emailErr;echo $error?></span><span class="success"><?php echo $success;?></span>
+			<br /><span class="error"><?php echo $nameErr;echo $pwErr;echo $emailErr;echo $error;?></span><span class="success"><?php echo $success;?></span>
 		</form>
 	</article>
 	<hr class="main">

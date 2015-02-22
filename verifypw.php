@@ -116,7 +116,7 @@
 			}
 		}
 		?>
-		<br /><span class="error"><?php echo $error?></span><span class="success"><?php echo $success;?></span>
+		<br /><span class="error"><?php echo $error;?></span><span class="success"><?php echo $success;?></span>
 		</form>
 	</article>
 	<hr class="main">

@@ -5,7 +5,7 @@
 	<meta name="keywords" content="xserv, wow, xserv wow, world of warcraft, blizzlike, privatserver, 3.3.5a, wotlk">
 	<meta name="description" content="Xserv ist ein kostenoser WoW Blizzlike-Server mit kompetentem Team und freundlicher Community">
 	<meta name="author" content="Nikno">
-	<title>Xserv WoW: Passwort vergessen</title>
+	<title>Xserv WoW: Login</title>
 	<link rel="icon" href="images/favicon.gif" type="image/x-icon">
 	<link rel="stylesheet" href="main.css">
 	<!--[if lt IE 9]>
@@ -28,8 +28,10 @@
 	</nav>
 	<hr class="main">
 	<article>
-	<h3>Hier kannst du dein Passwort zurücksetzen:</h3>
+	<h3>Accountlogin:</h3>
 		<?php
+		$name = $pw = "";
+		$success = $error = "";
 		require_once 'mysql.php';
 		function test_input($data)
 		{
@@ -40,67 +42,73 @@
 		}
 		?>
 		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-			<label for="name">Accountname:</label><input type="text" name="name" id="name"><span style="font-size:75%;margin-left:50px;">Du hast deinen Accountnamen vergessen? Kontaktiere bitte einen Administrator.</span><br />
-			<label for="email">E-Mail-Adresse:</label><input type="email" name="email" id="email"><br />
+			<label for="name">Accountname:</label><input type="text" name="name" id="name"><br />
+			<label for="pw">Passwort:</label><input type="password" name="pw" id="pw"><span style="font-size:75%;margin-left:50px;">Passwort vergessen? <a href="forgotpw.php">Hier klicken!</a></span><br />
 			<input type="submit" name="submit" value="Submit" class="button">
 			<?php
 			$name = test_input($_POST["name"]);
-			$email = test_input($_POST["email"]);
+			$pw = test_input($_POST["pw"]);
 			if (!mysqli_connect_errno()) //MySQL Verbindung testen
 			{
 				if ($_SERVER["REQUEST_METHOD"] == "POST") //Formularverbindung testen
 				{
-					if (!empty($name))
+					session_start(); 
+					if (!empty($name)) //Feld Accountname nicht leer
 					{
-						if (!empty($email))
+						$nameIns=mysqli_real_escape_string($connect, $name);
+						$nameAvail = "SELECT * FROM `account` WHERE `username` = '$nameIns'";
+						mysqli_query($connect,$nameAvail);
+						$rows = mysqli_affected_rows($connect);
+						if ($rows == 1) //Accountname stimmt
 						{
-							$nameIns=mysqli_real_escape_string($connect, $name);
-							$emailIns=mysqli_real_escape_string($connect, $email);
-							$query = "SELECT * FROM `account` WHERE `username` = '$nameIns' AND `email` = '$emailIns'";
-							mysqli_query($connect,$query);
-							$rows = mysqli_affected_rows($connect);
-							if ($rows == 1)
+							if (!empty($pw)) //Feld Passwort nicht leer
 							{
-								$success = "Daten validiert. Es wurde eine Bestätigungsmail an dich gesendet. Bitte klicke auf den Link um dein Passwort zurückzusetzen.";
-								$created = date("Y-m-d H:i:s");
-								$hash = md5(uniqid(rand(), true));
-								
-								$query="UPDATE `activation` SET hash2 = '$hash', created2 = '$created' WHERE mail='$emailIns'";
+								$pwIns=mysqli_real_escape_string($connect, $pw);
+								$nameIns = strtoupper($nameIns); //In Grossbuchstaben umwandeln
+								$hash = SHA1(strtoupper($nameIns.':'.$pwIns)); //Passworthash erstellen
+								$query="SELECT * FROM `account` WHERE `username` = '$nameIns' AND `locked` = '0'";
 								mysqli_query($connect,$query);
-								
-								$url='http://wow.xserv.net/verifypw.php?email=' . urlencode($emailIns) . "&key=$hash";
-								$subject = "Xserv WoW Passwort zurücksetzen";
-								$headers   = array();
-								$headers[] = "MIME-Version: 1.0";
-								$headers[] = "Content-type: text/plain; charset=utf-8";
-								$headers[] = "From: Xserv WoW <admin@xserv.net>";
-								$headers[] = "Reply-To: Xserv WoW <admin@xserv.net>";
-								$headers[] = "Subject: {$subject}";
-								$headers[] = "X-Mailer: PHP/".phpversion();
-								$mailtext = "Hallo $name,\n\num dein Passwort zurückzusetzen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nSollte es irgendwelche Probleme geben, kontaktiere einen Administrator.\n\nViel Spaß auf Xserv WoW!";
-
-								mail($email, $subject, $mailtext, implode("\r\n", $headers));
-								mysqli_close($connect);
+								$rows = mysqli_affected_rows($connect);
+								if ($rows == 1) //Accountname stimmt und nicht gesperrt
+								{
+									$abfrage = "SELECT username, sha_pass_hash FROM account WHERE username LIKE '$nameIns' LIMIT 1";
+									$result = mysqli_query($connect,$abfrage); 
+									$row = mysqli_fetch_object($result); 
+									if($row->sha_pass_hash == $hash) 
+									{ 
+										$_SESSION["username"] = $nameIns; 
+										$success = 'Login erfolgreich. <a href="profile.php">Weiter zu ihrem Account.</a>';
+										mysqli_free_result($result);
+									}
+									else
+									{
+										$error = "Login fehlgeschlagen. Falsches Passwort.";
+									}
+								}
+								else
+								{
+									$error = "Der Account ist leider gesperrt oder noch nicht aktiviert.";
+								}
 							}
 							else
 							{
-								$error="Accountname und Mail-Adresse stimmen nicht überein.";
+								$error = "Bitte gib ein Passwort ein.";
 							}
 						}
 						else
 						{
-							$error="Bitte gib eine E-Mail-Adresse ein.";
+							$error = "Dieser Accountname existiert nicht.";
 						}
 					}
 					else
 					{
-						$error="Bitte gib einen Accountnamen ein.";
+						$error = "Bitte gib einen Accountnamen ein.";
 					}
 				}
 			}
 			else
 			{
-				$error="Fehler beim Aufbau der Datenbankverbindung. Sollte dieser Fehler erneut auftreten, kontaktieren Sie bitte einen Administrator. Fehlercode: 30";
+				$error = "Fehler beim Aufbau der Datenbankverbindung. Sollte dieser Fehler erneut auftreten, kontaktieren Sie bitte einen Administrator. Fehlercode: 10";
 			}
 			?>
 			<br /><span class="error"><?php echo $error;?></span><span class="success"><?php echo $success;?></span>
