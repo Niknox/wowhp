@@ -56,7 +56,7 @@
 									{
 										die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 45');
 									}
-									if (!mysqli_query($connect,$query2))
+									else if (!mysqli_query($connect,$query2))
 									{
 										die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 46');
 									}

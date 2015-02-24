@@ -31,11 +31,11 @@
 		{
 			die($error='Error: ' . mysqli_error($connect) . ' Fehlercode: 25');
 		}
-		if (!mysqli_query($connect, $query2))
+		else if (!mysqli_query($connect, $query2))
 		{
 			die($error='Error: ' . mysqli_error($connect) . ' Fehlercode: 26');
 		}
-		if (mysqli_affected_rows($connect) == 1)
+		else if (mysqli_affected_rows($connect) == 1)
 		{
 			$success='Dein Account wurde erfolgreich aktiviert.<br><br><a href="index.html">Zurück zur Startseite</a>';
 		}

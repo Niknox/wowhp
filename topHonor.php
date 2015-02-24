@@ -61,6 +61,7 @@
 			?>
 		</table>
 	</article>
+	<hr class="main">
 	<footer>
 	<?php include('footer.php');?>
 	</footer>
