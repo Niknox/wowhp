@@ -37,7 +37,7 @@
 		}
 		else if (mysqli_affected_rows($connect) == 1)
 		{
-			$success='Dein Account wurde erfolgreich aktiviert.<br><br><a href="index.html">Zurück zur Startseite</a>';
+			$success='Dein Account wurde erfolgreich aktiviert.<br><br><a href="index.php">Zurück zur Startseite</a>';
 		}
 		else
 		{

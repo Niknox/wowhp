@@ -62,7 +62,7 @@
 									}
 									else
 									{
-										$success = "Passwort erfolgreich geändert.";
+										$success = 'Passwort erfolgreich geändert.<br><br><a href="index.php">Zurück zur Startseite</a>';
 									}
 								}
 								else
