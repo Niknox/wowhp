@@ -41,7 +41,7 @@
 					{
 						if (preg_match("/^[a-zA-Z0-9]{3,20}$/",$name)) //Verifiziere Accountname
 						{
-							$nameIns=mysqli_real_escape_string($connect, $name);
+							$nameIns = mysqli_real_escape_string($connect, $name);
 							$nameAvail = "SELECT * FROM `account` WHERE `username` = '$nameIns'";
 							mysqli_query($connect,$nameAvail);
 							$rows = mysqli_affected_rows($connect);
@@ -57,37 +57,47 @@
 											{
 												if (!empty($email)) //Feld Email nicht leer
 												{
-													$pwIns=mysqli_real_escape_string($connect, $pw);
-													$emailIns=mysqli_real_escape_string($connect, $email);
-													$nameIns = strtoupper($nameIns); //In Grossbuchstaben umwandeln
-													$hash = SHA1(strtoupper($nameIns.':'.$pwIns)); //Passworthash erstellen
-													$query="INSERT INTO `account` (username, sha_pass_hash, email, last_ip, locked, expansion, os) VALUES ('$nameIns', '$hash', '$emailIns', '127.0.0.1', '1', '2', 'Win')";
-													if (!mysqli_query($connect,$query))
+													$emailIns = mysqli_real_escape_string($connect, $email);
+													$emailAvail = "SELECT * FROM `account` WHERE `email` = '$emailIns'"
+													mysqli_query($connect,$emailAvail);
+													$rows = mysqli_affected_rows($connect);
+													if ($rows == 0) //Email nicht vorhanden
 													{
-														die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 15');
+														$pwIns = mysqli_real_escape_string($connect, $pw);
+														$nameIns = strtoupper($nameIns); //In Grossbuchstaben umwandeln
+														$hash = SHA1(strtoupper($nameIns.':'.$pwIns)); //Passworthash erstellen
+														$query = "INSERT INTO `account` (username, sha_pass_hash, email, last_ip, locked, expansion, os) VALUES ('$nameIns', '$hash', '$emailIns', '127.0.0.1', '1', '2', 'Win')";
+														if (!mysqli_query($connect,$query))
+														{
+															die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 15');
+														}
+														else
+														{
+															$success = "Daten validiert. Es wurde eine Aktivierungsmail an dich gesendet. Bitte klicke auf den Link um die Accounterstellung abzuschließen.";
+															$created = date("Y-m-d H:i:s");
+															$hash = md5(uniqid(rand(), true));
+															
+															$query="INSERT INTO `activation` (hash, created, mail, isactive) VALUES ('$hash', '$created', '$emailIns', 'no')";
+															mysqli_query($connect,$query);
+															
+															$url='http://wow.xserv.net/verify.php?email=' . urlencode($emailIns) . "&key=$hash";
+															$subject = "Registrierung bei Xserv WoW abschließen";
+															$headers   = array();
+															$headers[] = "MIME-Version: 1.0";
+															$headers[] = "Content-type: text/plain; charset=utf-8";
+															$headers[] = "From: Xserv WoW <admin@xserv.net>";
+															$headers[] = "Reply-To: Xserv WoW <admin@xserv.net>";
+															$headers[] = "Subject: {$subject}";
+															$headers[] = "X-Mailer: PHP/".phpversion();
+															$mailtext = "Hallo $name,\n\num die Registrierung abzuschließen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spaß auf Xserv WoW!";
+
+															mail($email, $subject, $mailtext, implode("\r\n", $headers));
+															mysqli_close($connect);
+														}
 													}
 													else
 													{
-														$success = "Daten validiert. Es wurde eine Aktivierungsmail an dich gesendet. Bitte klicke auf den Link um die Accounterstellung abzuschließen.";
-														$created = date("Y-m-d H:i:s");
-														$hash = md5(uniqid(rand(), true));
-														
-														$query="INSERT INTO `activation` (hash, created, mail, isactive) VALUES ('$hash', '$created', '$emailIns', 'no')";
-														mysqli_query($connect,$query);
-														
-														$url='http://wow.xserv.net/verify.php?email=' . urlencode($emailIns) . "&key=$hash";
-														$subject = "Registrierung bei Xserv WoW abschließen";
-														$headers   = array();
-														$headers[] = "MIME-Version: 1.0";
-														$headers[] = "Content-type: text/plain; charset=utf-8";
-														$headers[] = "From: Xserv WoW <admin@xserv.net>";
-														$headers[] = "Reply-To: Xserv WoW <admin@xserv.net>";
-														$headers[] = "Subject: {$subject}";
-														$headers[] = "X-Mailer: PHP/".phpversion();
-														$mailtext = "Hallo $name,\n\num die Registrierung abzuschließen, klicke bitte auf den nachfolgenden Link:\n\n$url \n\nViel Spaß auf Xserv WoW!";
-
-														mail($email, $subject, $mailtext, implode("\r\n", $headers));
-														mysqli_close($connect);
+														$emailErr = "Die E-Mail-Adresse ist bereits vorhanden."
 													}
 												}
 												else
@@ -122,7 +132,7 @@
 						}
 						else
 						{
-							$nameErr = "Der Accountname ist zu kurz (mind. 3 Stellen), zu lang (max. 20 Stellen), oder enthält nicht erlaubte Zeichen. Erlaubt sind: Kleinbuchstaben, Großbuchstaben, Zahlen.";
+							$nameErr = "Der Accountname ist zu kurz (mind. 3 Stellen), zu lang (max. 20 Stellen), oder enthält nicht erlaubte Zeichen. Erlaubt sind: a-z, A-Z, 0-9.";
 						}
 					}
 					else
