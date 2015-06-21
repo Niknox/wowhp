@@ -35,8 +35,8 @@
 					{
 						if (!empty($email))
 						{
-							$nameIns=mysqli_real_escape_string($connect, $name);
-							$emailIns=mysqli_real_escape_string($connect, $email);
+							$nameIns = mysqli_real_escape_string($connect, $name);
+							$emailIns = mysqli_real_escape_string($connect, $email);
 							$query = "SELECT * FROM `account` WHERE `username` = '$nameIns' AND `email` = '$emailIns'";
 							mysqli_query($connect,$query);
 							$rows = mysqli_affected_rows($connect);
@@ -46,10 +46,10 @@
 								$created = date("Y-m-d H:i:s");
 								$hash = md5(uniqid(rand(), true));
 								
-								$query="UPDATE `activation` SET hash2 = '$hash', created2 = '$created' WHERE mail='$emailIns'";
+								$query = "UPDATE `activation` SET hash2 = '$hash', created2 = '$created' WHERE mail='$emailIns'";
 								mysqli_query($connect,$query);
 								
-								$url='http://wow.xserv.net/verifypw.php?email=' . urlencode($emailIns) . "&key=$hash";
+								$url = 'http://wow.xserv.net/verifypw.php?email=' . urlencode($emailIns) . "&key=$hash";
 								$subject = "Xserv WoW Passwort zurücksetzen";
 								$headers   = array();
 								$headers[] = "MIME-Version: 1.0";

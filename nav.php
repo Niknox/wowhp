@@ -1,4 +1,17 @@
+<?php
+	session_start();
+	if (isset($_SESSION['username']))
+	{
+		$login = '<div class="login"><a href="logout.php">Logout</a></div>';
+		
+	}
+	else
+	{
+		$login = '<div class="login"><a href="login.php">Login</a></div>';
+	}
+?>
 <header>
+	<?php echo $login;?>
 	<img id="logo" src="images/logo.png" alt="Xserv WoW Blizzlike">
 </header>
 <nav>

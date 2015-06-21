@@ -50,8 +50,8 @@
 								{
 									$nameIns = strtoupper($nameIns); //In Grossbuchstaben umwandeln
 									$hash = SHA1(strtoupper($nameIns.':'.$pwIns)); //Passworthash erstellen
-									$query="UPDATE `account` SET sha_pass_hash='$hash' WHERE email='$emailIns'";
-									$query2="UPDATE `activation` SET hash2 = '' WHERE mail = '$emailIns'";
+									$query = "UPDATE `account` SET sha_pass_hash='$hash' WHERE email='$emailIns'";
+									$query2 = "UPDATE `activation` SET hash2 = '' WHERE mail = '$emailIns'";
 									if (!mysqli_query($connect,$query))
 									{
 										die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 45');
@@ -67,32 +67,32 @@
 								}
 								else
 								{
-									$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 42";
+									$error = "Fehler bei der Erstellung deines Accounts. Fehlercode: 42";
 								}
 							}
 							else
 							{
-								$error="Das Passwort ist zu kurz (mind. 6 Stellen), zu lang (max. 20 Stellen), oder enthält nicht erlaubte Zeichen. Erlaubt sind: A-Z, a-z, 0-9, !?*+-.,";
+								$error = "Das Passwort ist zu kurz (mind. 6 Stellen), zu lang (max. 20 Stellen), oder enthält nicht erlaubte Zeichen. Erlaubt sind: A-Z, a-z, 0-9, !?*+-.,";
 							}
 						}
 						else
 						{
-							$error="Die Passwörter stimmen nicht überein.";
+							$error = "Die Passwörter stimmen nicht überein.";
 						}
 					}
 					else
 					{
-						$error="Bitte gib dein Passwort zur Bestätigung ein.";
+						$error = "Bitte gib dein Passwort zur Bestätigung ein.";
 					}
 				}
 				else
 				{
-					$error="Bitte gib ein Passwort ein.";
+					$error = "Bitte gib ein Passwort ein.";
 				}
 			}
 			else
 			{
-				$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 41";
+				$error = "Fehler bei der Erstellung deines Accounts. Fehlercode: 41";
 			}
 		}
 		?>

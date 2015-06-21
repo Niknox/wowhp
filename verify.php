@@ -37,16 +37,16 @@
 		}
 		else if (mysqli_affected_rows($connect) == 1)
 		{
-			$success='Dein Account wurde erfolgreich aktiviert.<br><br><a href="index.php">Zurück zur Startseite</a>';
+			$success = 'Dein Account wurde erfolgreich aktiviert.<br><br><a href="index.php">Zurück zur Startseite</a>';
 		}
 		else
 		{
-			$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 24";
+			$error = "Fehler bei der Erstellung deines Accounts. Fehlercode: 24";
 		}
 	}
 	else
 	{
-		$error="Fehler bei der Erstellung deines Accounts. Fehlercode: 21";
+		$error = "Fehler bei der Erstellung deines Accounts. Fehlercode: 21";
 	}
 	mysqli_close($connect);
 	?>

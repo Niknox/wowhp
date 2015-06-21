@@ -57,8 +57,10 @@
 									if($row->sha_pass_hash == $hash) 
 									{ 
 										$_SESSION["username"] = $nameIns; 
-										$success = 'Login erfolgreich. <a href="profile.php">Weiter zu ihrem Account.</a>';
+										$success = 'Login erfolgreich. Sie werden in 3 Sekunden weitergeleitet.';
 										mysqli_free_result($result);
+										
+										header('refresh:3;http://wow.xserv.net/profile.php');
 									}
 									else
 									{

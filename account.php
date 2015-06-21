@@ -10,9 +10,6 @@
 	<article>
 	<h3>Hier kannst du einen Account erstellen:</h3>
 		<?php
-		$name = $pw = $pw2 = $email = "";
-		$nameErr = $pwErr = $emailErr = $success = $error = "";
-		$nameIns = $pwIns = $emailIns = "";
 		require_once 'mysql.php';
 		function test_input($data)
 		{
@@ -58,7 +55,7 @@
 												if (!empty($email)) //Feld Email nicht leer
 												{
 													$emailIns = mysqli_real_escape_string($connect, $email);
-													$emailAvail = "SELECT * FROM `account` WHERE `email` = '$emailIns'"
+													$emailAvail = "SELECT * FROM `account` WHERE `email` = '$emailIns'";
 													mysqli_query($connect,$emailAvail);
 													$rows = mysqli_affected_rows($connect);
 													if ($rows == 0) //Email nicht vorhanden
@@ -67,7 +64,8 @@
 														$nameIns = strtoupper($nameIns); //In Grossbuchstaben umwandeln
 														$hash = SHA1(strtoupper($nameIns.':'.$pwIns)); //Passworthash erstellen
 														$query = "INSERT INTO `account` (username, sha_pass_hash, email, last_ip, locked, expansion, os) VALUES ('$nameIns', '$hash', '$emailIns', '127.0.0.1', '1', '2', 'Win')";
-														if (!mysqli_query($connect,$query))
+														$query2 = "INSERT INTO `donation` (username) VALUES ('$nameIns')";
+														if (!mysqli_query($connect,$query) || !mysqli_query($connect,$query2))
 														{
 															die($error = 'Error: ' . mysqli_error($connect) . ' Fehlercode: 15');
 														}
@@ -77,10 +75,10 @@
 															$created = date("Y-m-d H:i:s");
 															$hash = md5(uniqid(rand(), true));
 															
-															$query="INSERT INTO `activation` (hash, created, mail, isactive) VALUES ('$hash', '$created', '$emailIns', 'no')";
+															$query = "INSERT INTO `activation` (hash, created, mail, isactive) VALUES ('$hash', '$created', '$emailIns', 'no')";
 															mysqli_query($connect,$query);
 															
-															$url='http://wow.xserv.net/verify.php?email=' . urlencode($emailIns) . "&key=$hash";
+															$url = 'http://wow.xserv.net/verify.php?email=' . urlencode($emailIns) . "&key=$hash";
 															$subject = "Registrierung bei Xserv WoW abschließen";
 															$headers   = array();
 															$headers[] = "MIME-Version: 1.0";
@@ -97,7 +95,7 @@
 													}
 													else
 													{
-														$emailErr = "Die E-Mail-Adresse ist bereits vorhanden."
+														$emailErr = "Die E-Mail-Adresse ist bereits vorhanden.";
 													}
 												}
 												else

@@ -128,15 +128,15 @@ footer a
 {
 	text-decoration: none;
 }
-#imp
+.link
 {
 	color: #FFFFFF;
 	margin-left: 1100px;
-	text-decoration: underline;
 }
-#imp:hover,#imp:active
+.link:hover,.link:active
 {
 	color: #00BFFF;
+	text-decoration: underline;
 }
 div.list ul
 {
@@ -194,4 +194,31 @@ span.announcer
 {
 	font-weight: bold;
 	margin-right: 12px;
+}
+.login
+{
+	position: absolute;
+	margin-left: 1133px;
+	background-color: black;
+	font-size: 1.125em;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-weight: bold;
+
+}
+.login a
+{
+	padding: 5px;
+	text-decoration: none;
+	color: #87CEFA;
+	display: block;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #87CEFA;
+}
+.login a:hover, .login a:active
+{
+	text-decoration: none;
+	background-color: #333333;
+	color: #00BFFF;
+	border-color: #00BFFF;
 }
