@@ -20,8 +20,8 @@
 			}
 		?>
 		<h3>Spendenübersicht</h3>
-		Insgesamt gespendet: <?php printf ($row["donated"] + '€');?><br />
-		Spendenpunkte gesamt: <?php printf ($row["points"] + ' Punkte')?><br />
+		Insgesamt gespendet: <?php printf (($row["donated"]/100) . '€');?><br />
+		Spendenpunkte gesamt: <?php printf ($row["points"] . ' Punkte');?><br />
 		<a href="donate.php">Jetzt spenden</a><br />
 		<a href="points.php">Spendenpunkte ausgeben</a>
 		<?php mysqli_free_result($result); mysqli_close($connect);?>
