@@ -33,10 +33,10 @@
 					<li>Besitzt du eine neuere Version als 3.3.5a (4.x.x, 5.x.x oder 6.x.x) dann musst du WoW leider nochmal installieren. Die Möglichkeit eines Downgrades auf 3.3.5a besteht leider nicht.</li>
 				</ul>
 			<br />
-			<h3>Immer wenn ich mich einlogge will mein WoW hochpatchen.</h3>
+			<h3>Immer wenn ich mich einlogge, will mein WoW hochpatchen.</h3>
 				<ul>
 					<li>Bitte achte darauf, WoW nicht mit der "Launcher.exe" sondern mit der "wow.exe" zu starten.</li>
-					<li>Außerdem darfst du dich beim Anmeldefenster nicht mit deiner E-Mail anmelden. Bitte nutze den Accountnamen, den du bei der Accounterstellung eingegeben habt.</li>
+					<li>Außerdem darfst du dich beim Anmeldefenster nicht mit deiner E-Mail anmelden. Bitte nutze den Accountnamen, den du bei der Accounterstellung eingegeben hast.</li>
 					<li>Auch kann es sein, dass die Realmlist noch nicht auf Xserv umgestellt ist. Öffne dazu die Datei /Data/deDE/realmlist.wtf in eurem WoW-Ordner und achte darauf, dass dort nur <code>set realmlist xserv.net</code> steht.</li>
 				</ul>
 			<br />
