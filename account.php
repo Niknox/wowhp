@@ -78,7 +78,7 @@
 															$query = "INSERT INTO `activation` (hash, created, mail, isactive) VALUES ('$hash', '$created', '$emailIns', 'no')";
 															mysqli_query($connect,$query);
 															
-															$url = 'http://wow.xserv.net/verify.php?email=' . urlencode($emailIns) . "&key=$hash";
+															$url = 'https://www.xserv.net/verify.php?email=' . urlencode($emailIns) . "&key=$hash";
 															$subject = "Registrierung bei Xserv WoW abschließen";
 															$headers   = array();
 															$headers[] = "MIME-Version: 1.0";

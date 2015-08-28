@@ -49,7 +49,7 @@
 								$query = "UPDATE `activation` SET hash2 = '$hash', created2 = '$created' WHERE mail='$emailIns'";
 								mysqli_query($connect,$query);
 								
-								$url = 'http://wow.xserv.net/verifypw.php?email=' . urlencode($emailIns) . "&key=$hash";
+								$url = 'https://www.xserv.net/verifypw.php?email=' . urlencode($emailIns) . "&key=$hash";
 								$subject = "Xserv WoW Passwort zurücksetzen";
 								$headers   = array();
 								$headers[] = "MIME-Version: 1.0";

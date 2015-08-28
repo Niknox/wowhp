@@ -21,7 +21,7 @@
 			<h3>Wie spiele ich auf Xserv WoW?</h3>
 				<ol>
 					<li>Bitte lies dir dazu zuerst unsere <a href="regeln.php">Serverregeln</a> durch.</li>
-					<li>Installiere World of Warcraft 3.3.5a (Fertiger Spielordner <a href="http://adf.ly/qNf4N">downloaden</a>, sofort spielbar!).</li>
+					<li>Installiere World of Warcraft 3.3.5a (Fertiger Spielordner <a href="https://adf.ly/qNf4N">downloaden</a>, sofort spielbar!).</li>
 					<li>Falls noch nicht geschehen, erstell dir <a href="account.php">hier</a> einen Xserv-WoW-Account.</li>
 					<li>Starte WoW über die Datei "wow.exe" und log dich mit deinen Accountdaten ein. Viel Spaß!</li>
 				</ol>

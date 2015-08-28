@@ -60,7 +60,7 @@
 										$success = 'Login erfolgreich. Sie werden in 3 Sekunden weitergeleitet.';
 										mysqli_free_result($result);
 										
-										header('refresh:3;http://wow.xserv.net/profile.php');
+										header('refresh:3;https://www.xserv.net/profile.php');
 									}
 									else
 									{

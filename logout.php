@@ -2,5 +2,5 @@
 	session_start();
 	$_SESSION = array();
 	session_destroy();
-	header('refresh:3;http://wow.xserv.net/index.php');
+	header('refresh:3;https://www.xserv.net/index.php');
 ?>
