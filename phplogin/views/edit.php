@@ -1,14 +1,7 @@
 
 <fieldset>
 	<legend><?php echo WORDING_EDIT_USER_DATA; ?></legend>
-	<h2><?php echo $_SESSION['user_name']; ?> <?php echo WORDING_EDIT_YOUR_CREDENTIALS; ?></h2>
-
-	<!-- edit form for username / this form uses HTML5 attributes, like "required" and type="email" -->
-	<form method="post" action="?edit">
-		<label for="user_name"><?php echo WORDING_NEW_USERNAME; ?></label>
-		<input id="user_name" type="text" name="user_name" pattern="[a-zA-Z0-9]{2,64}" required /> (<?php echo WORDING_CURRENTLY; ?>: <?php echo $_SESSION['user_name']; ?>)
-		<input type="submit" name="user_edit_submit_name" value="<?php echo WORDING_CHANGE_USERNAME; ?>" />
-	</form><hr/>
+	<h2><?php echo $_SESSION['user_name'].','; ?> <?php echo WORDING_EDIT_YOUR_CREDENTIALS; ?></h2>
 
 	<!-- edit form for user email / this form uses HTML5 attributes, like "required" and type="email" -->
 	<form method="post" action="?edit">

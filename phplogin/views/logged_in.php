@@ -1,6 +1,6 @@
 
 <fieldset>
-	<legend><?php echo WORDING_EDIT_USER_DATA; ?></legend>
+	<legend><?php echo WORDING_PROFILE; ?></legend>
 	<p><?php echo WORDING_YOU_ARE_LOGGED_IN_AS . '<b>' . $_SESSION['user_name']; ?></b></p><hr/>
 
 	<p>$_SESSION['user_id'] = <?php echo $_SESSION['user_id']; ?></p>
