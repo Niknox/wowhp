@@ -1,6 +1,2 @@
 User-agent: *
-Disallow: /verify.php
-Disallow: /verifypw.php
-Disallow: /auth.php
-Disallow: /logout.php
-Disallow: /profile.php
+Disallow: /phplogin/*

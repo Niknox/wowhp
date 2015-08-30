@@ -151,24 +151,6 @@ div.list ul ul
 {
 	padding-left: 40px;
 }
-label
-{
-	width: 10em;
-	display: block;
-	float: left;
-}
-input
-{
-	width: 12em;
-}
-span.error
-{
-	color: #FF0000;
-}
-span.success
-{
-	color: #00FF00;
-}
 .button
 {
 	cursor: pointer;
@@ -196,30 +178,68 @@ span.announcer
 	font-weight: bold;
 	margin-right: 12px;
 }
-.login
+div.phplogin
 {
-	position: absolute;
-	margin-left: 1133px;
-	background-color: black;
-	font-size: 1.125em;
-	font-family: Tahoma, Geneva, sans-serif;
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	margin: 10px;
+	text-align: center;
+}
+fieldset {
+	display: inline-block;
+	text-align: left;
+	border: 1px solid #87CEFA;
+	margin: 0 auto;
+	padding: 15px;
+	border-radius: 6px;
+	margin-bottom: 15px;
+}
+legend {
+	font-size: 1.2em;
 	font-weight: bold;
-
 }
-.login a
-{
-	padding: 5px;
-	text-decoration: none;
-	color: #87CEFA;
+label {
 	display: block;
-	border-width: 2px;
-	border-style: solid;
-	border-color: #87CEFA;
+	vertical-align: middle;
+	bottom: 1px;
 }
-.login a:hover, .login a:active
-{
-	text-decoration: none;
-	background-color: #333333;
-	color: #00BFFF;
-	border-color: #00BFFF;
+input[type=text], input[type=password], input[type=submit], input[type=email] {
+	margin-bottom: 15px;
+	padding: 4px;
+	font-size: 13px;
+	line-height: 16px;
+	width: 240px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+input[type=submit] {
+	display: block;
+	width: 250px;
+	background-color: #4c8ffc;
+	border: 1px solid #2f5bb7;
+	color: #fff;
+	cursor: pointer;
+	margin-bottom: 5px;
+}
+input[type=checkbox] {
+	margin-bottom: 15px;
+}
+.login_error {
+	background: grey url(phplogin/views/error.png) no-repeat center left;
+	border: 1px solid #f36971;
+	padding: 5px 8px 5px 24px;
+	display: inline-block;
+	*display: inline; /* display:inline-block is not supported by IE7 */
+	border-radius: 3px;
+	margin-bottom: 7px;
+}
+.login_message {
+	background: #dff0d8 url(phplogin/views/info.png) no-repeat center left;
+	border: 1px solid #d0e5ca;
+	color: #468847;
+	padding: 5px 8px 5px 24px;
+	display: inline-block;
+	*display: inline; /* display:inline-block is not supported by IE7 */
+	border-radius: 3px;		
+	margin-bottom: 7px;
 }
