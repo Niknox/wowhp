@@ -1,5 +1,13 @@
 <header>
 	<img id="logo" src="images/logo.png" alt="Xserv WoW Blizzlike">
+	<fieldset class="playerCount">
+	<legend>Status</legend>
+	<?php require_once 'players.php'; ?>
+	Spieler online: <?php echo $playerCount; ?><br />
+	Allianz: <?php echo $playerAllianceCount; ?><br />
+	Horde: <?php echo $playerHordeCount; ?><br />
+	Status: <span style="color:#00CC00;font-weight:bold">Online</span> (<?php echo $uptime; ?>)
+	</fieldset>
 </header>
 <nav>
 	<ul>

@@ -194,6 +194,15 @@ fieldset {
 	border-radius: 6px;
 	margin-bottom: 15px;
 }
+fieldset.playerCount{
+	position: absolute;
+	margin-left: 752px;
+	border-radius: 4px;
+	padding: 10px;
+	border: 2px solid #87CEFA;
+	margin-top: 98px;
+	font-size: 0.75em;
+}
 legend {
 	font-size: 1.2em;
 	font-weight: bold;
