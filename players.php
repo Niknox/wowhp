@@ -21,11 +21,13 @@ try {
 	$result = $conn->prepare($query_uptime);
 	$result->execute();
 	$uptime = $result->fetchColumn();
-	$hours = intval(intval($uptime) / 3600);
+
+	$days = intval($uptime / 86400);
+	$hours = intval(($uptime / 3600) % 24);
 	$hours = str_pad($hours, 2, "0", STR_PAD_LEFT);
 	$minutes = intval(($uptime / 60) % 60);
 	$minutes = str_pad($minutes, 2, "0", STR_PAD_LEFT);
-	$uptime = $hours . "h " . $minutes . "m";
+	$uptime = $days . "d " . $hours . "h " . $minutes . "m";
 }
 catch(PDOException $e)
 {
