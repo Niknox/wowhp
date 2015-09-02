@@ -28,7 +28,7 @@ define("MESSAGE_PASSWORD_CHANGE_FAILED", "Entschuldigung, die Passwortänderung 
 define("MESSAGE_PASSWORD_CHANGED_SUCCESSFULLY", "Passwort erfolgreich geändert!");
 define("MESSAGE_PASSWORD_EMPTY", "Passwort-Feld war leer");
 define("MESSAGE_PASSWORD_RESET_MAIL_FAILED", "E-Mail zum Zurücksetzen des Passworts wurde NICHT erfolgreich versendet! Fehler: ");
-define("MESSAGE_PASSWORD_RESET_MAIL_SUCCESSFULLY_SENT", "E-Mail zum Zurücksetzen des Passworts wurde erfolgreich versendet!");
+define("MESSAGE_PASSWORD_RESET_MAIL_SUCCESSFULLY_SENT", "Daten validiert. Es wurde eine Bestätigungsmail an dich gesendet. Bitte klicke auf den Link um dein Passwort zurückzusetzen.");
 define("MESSAGE_PASSWORD_TOO_SHORT", "Das Passwort hat eine Mindestlänge von 6 Zeichen");
 define("MESSAGE_PASSWORD_WRONG", "Falsches Passwort. Bitte versuche es erneut.");
 define("MESSAGE_PASSWORD_WRONG_3_TIMES", "Du hast dein Passwort bereits dreimal oder öfter falsch eingegeben. Bitte warte 30 Sekunden und versuche es dann erneut.");

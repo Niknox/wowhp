@@ -212,40 +212,6 @@ class PHPLogin
     }
 
     /**
-     * Create a PHPMailer Object with configuration of config.php
-     * @return PHPMailer Object
-     */
-    private function getPHPMailerObject()
-    {
-        require_once(__DIR__ .'/libraries/PHPMailer.php');
-        $mail = new PHPMailer;
-
-        // please look into the config/config.php for much more info on how to use this!
-        // use SMTP or use mail()
-        if (EMAIL_USE_SMTP) {
-            require_once(__DIR__ .'/libraries/SMTP.php');
-            // Set mailer to use SMTP
-            $mail->IsSMTP();
-            //useful for debugging, shows full SMTP errors
-            //$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
-            // Enable SMTP authentication
-            $mail->SMTPAuth = EMAIL_SMTP_AUTH;
-            // Enable encryption, usually SSL/TLS
-            if (defined(EMAIL_SMTP_ENCRYPTION)) {
-                $mail->SMTPSecure = EMAIL_SMTP_ENCRYPTION;
-            }
-            // Specify host server
-            $mail->Host = EMAIL_SMTP_HOST;
-            $mail->Username = EMAIL_SMTP_USERNAME;
-            $mail->Password = EMAIL_SMTP_PASSWORD;
-            $mail->Port = EMAIL_SMTP_PORT;
-        } else {
-            $mail->IsMail();
-        }
-        return $mail;
-    }
-
-    /**
      * Logs in via the Cookie
      * @return bool success state of cookie login
      */
@@ -664,24 +630,21 @@ class PHPLogin
      */
     public function sendPasswordResetMail($user_name, $user_email, $user_password_reset_hash)
     {
-        $mail = $this->getPHPMailerObject();
-
-        $mail->From = EMAIL_PASSWORDRESET_FROM;
-        $mail->FromName = EMAIL_PASSWORDRESET_FROM_NAME;
-        $mail->AddAddress($user_email);
-        $mail->Subject = EMAIL_PASSWORDRESET_SUBJECT;
-
         $link = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '?password_reset';
         $link .= '&user_name=' . urlencode($user_name) . '&verification_code=' . urlencode($user_password_reset_hash);
-        $mail->Body = EMAIL_PASSWORDRESET_CONTENT . ' ' . $link;
+        $subject = "Xserv WoW Passwort zurücksetzen";
+        $headers   = array();
+        $headers[] = "MIME-Version: 1.0";
+        $headers[] = "Content-type: text/plain; charset=utf-8";
+        $headers[] = "From: Xserv WoW <admin@xserv.net>";
+        $headers[] = "Reply-To: Xserv WoW <admin@xserv.net>";
+        $headers[] = "Subject: {$subject}";
+        $headers[] = "X-Mailer: PHP/".phpversion();
+        $mailtext = "Hallo $user_name,\n\num dein Passwort zurückzusetzen, klicke bitte auf den nachfolgenden Link:\n\n$link \n\nSollte es irgendwelche Probleme geben, kontaktiere einen Administrator.\n\nViel Spaß auf Xserv WoW!";
 
-        if(!$mail->Send()) {
-            $this->errors[] = MESSAGE_PASSWORD_RESET_MAIL_FAILED . $mail->ErrorInfo;
-            return false;
-        } else {
-            $this->messages[] = MESSAGE_PASSWORD_RESET_MAIL_SUCCESSFULLY_SENT;
-            return true;
-        }
+        mail($user_email, $subject, $mailtext, implode("\r\n", $headers));
+        $this->messages[] = MESSAGE_PASSWORD_RESET_MAIL_SUCCESSFULLY_SENT;
+        return true;
     }
 
     /**
@@ -890,7 +853,7 @@ class PHPLogin
 
                 if ($query_new_user_insert && $query_new_user_insert_tc) {
                     // send a verification email
-                    if ($this->sendVerificationEmail($user_id, $user_email, $user_activation_hash)) {
+                    if ($this->sendVerificationEmail($user_name, $user_id, $user_email, $user_activation_hash)) {
                         // when mail has been send successfully
                         $this->messages[] = MESSAGE_VERIFICATION_MAIL_SENT;
                         $this->registration_successful = true;
@@ -917,27 +880,24 @@ class PHPLogin
      * sends an email to the provided email address
      * @return boolean gives back true if mail has been sent, gives back false if no mail could been sent
      */
-    public function sendVerificationEmail($user_id, $user_email, $user_activation_hash)
+    public function sendVerificationEmail($user_name, $user_id, $user_email, $user_activation_hash)
     {
-        $mail = $this->getPHPMailerObject();
-
-        $mail->From = EMAIL_VERIFICATION_FROM;
-        $mail->FromName = EMAIL_VERIFICATION_FROM_NAME;
-        $mail->AddAddress($user_email);
-        $mail->Subject = EMAIL_VERIFICATION_SUBJECT;
-
         $link = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
         $link .= '?id=' . urlencode($user_id) . '&verification_code=' . urlencode($user_activation_hash);
+        $subject = "Registrierung bei Xserv WoW abschließen";
+        $headers   = array();
+        $headers[] = "MIME-Version: 1.0";
+        $headers[] = "Content-type: text/plain; charset=utf-8";
+        $headers[] = "From: Xserv WoW <admin@xserv.net>";
+        $headers[] = "Reply-To: Xserv WoW <admin@xserv.net>";
+        $headers[] = "Subject: {$subject}";
+        $headers[] = "X-Mailer: PHP/".phpversion();
+        $mailtext = "Hallo $user_name,\n\num die Registrierung abzuschließen, klicke bitte auf den nachfolgenden Link:\n\n$link \n\nViel Spaß auf Xserv WoW!";
 
-        // the link to your register.php, please set this value in config/email_verification.php
-        $mail->Body = EMAIL_VERIFICATION_CONTENT.' '.$link;
+        mail($user_email, $subject, $mailtext, implode("\r\n", $headers));
 
-        if(!$mail->Send()) {
-            $this->errors[] = MESSAGE_VERIFICATION_MAIL_NOT_SENT . $mail->ErrorInfo;
-            return false;
-        } else {
-            return true;
-        }
+        $this->messages[] = "Daten validiert. Es wurde eine Aktivierungsmail an dich gesendet. Bitte klicke auf den Link um die Accounterstellung abzuschließen.";
+        return true;
     }
 
     /**
