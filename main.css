@@ -206,6 +206,7 @@ fieldset.playerCount{
 legend {
 	font-size: 1.2em;
 	font-weight: bold;
+	color: white;
 }
 label {
 	display: block;
