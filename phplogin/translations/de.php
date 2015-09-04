@@ -49,7 +49,8 @@ define("MESSAGE_USERNAME_INVALID", "Benutzername passt nicht ins Namensschema: n
 define("MESSAGE_USERNAME_SAME_LIKE_OLD_ONE", "Entschuldigung, dein Benutzername ist gleich wie dein jetziger. Bitte wähle einen anderen.");
 
 // views
-define("WORDING_BACK_TO_LOGIN", "Zurück zum Profil");
+define("WORDING_BACK_TO_LOGIN", "Zurück zur Anmeldung");
+define("WORDING_BACK_TO_PROFILE", "Zurück zum Profil");
 define("WORDING_CHANGE_EMAIL", "E-Mail ändern");
 define("WORDING_CHANGE_PASSWORD", "Passwort ändern");
 define("WORDING_CHANGE_USERNAME", "Benutzername ändern");

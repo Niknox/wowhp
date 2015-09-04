@@ -24,4 +24,4 @@
 		<input type="submit" name="user_edit_submit_password" value="<?php echo WORDING_CHANGE_PASSWORD; ?>" />
 	</form>
 </fieldset><br/>
-<a class="phplogin" href="<?php echo $_SERVER['SCRIPT_NAME']; ?>"><?php echo WORDING_BACK_TO_LOGIN; ?></a>
+<a class="phplogin" href="<?php echo $_SERVER['SCRIPT_NAME']; ?>"><?php echo WORDING_BACK_TO_PROFILE; ?></a>
